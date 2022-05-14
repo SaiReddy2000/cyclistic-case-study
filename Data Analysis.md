@@ -65,7 +65,9 @@ The question you'll have to answer comes from the director of marketing: **How d
 
 ### **Phase 2:Prepare**
 
----  
+--- 
+
+#### **Data Transformation**
 
 
 The data from the bike-sharing firm will be used in the project. The data used in the project is kept on AWS (Amazon Web Services). It was obtained directly from Cyclistic and made accessible under the license by Motivate International Inc. There is no personally identifying information in the data because it has been anonymised.  
@@ -266,6 +268,8 @@ T_All <- T_All[!(T_All$total_ride_time <= 0),]
 ### **Phase 4: Analyze**
 
 ---  
+
+#### **Data Analysis**
 
 
 I explored several variables for differences in behaviour between annual members and casual riders:
