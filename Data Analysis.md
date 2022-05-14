@@ -26,7 +26,7 @@ I will be following the corresponding steps of the **Data Analysis Process** as 
 * **Share**
 * **Act**
 
-I will be using **R** for Data Analysis, and will be using **Tableau** for Data Visualization.
+The primary tools for my project are **R** for **Data Analysis**, and **Tableau** for **Data Visualization**.
 
 ---
 
