@@ -9,172 +9,51 @@
 ---
 ---
 
-### **Introduction**  
+### **Project Overview**  
 
 ---  
 
 
-This is my capstone case study that I completed as part of the **Google Data Analytics Professional Certificate**.
+**Cyclistic**, a bike-sharing firm, believes that increasing the number of annual members over casual riders is the key to future success. The marketing analyst tems needs to know the following in order to develop a new marketing plan focused at converting casual riders into annual members:
 
-I will be following the corresponding steps of the **Data Analysis Process** as my guidelines for the completion of the project:  
+* What are the differences in how annual members and casual riders utilize Cyclistic bikes?
 
+* Why would an casual rider purchase a Cyclistic annual membership?
 
-* **Ask**
-* **Prepare**
-* **Process**
-* **Analyze**
-* **Share**
-* **Act**
+* How can Cyclistic utilize digital media to encourage casual members to become annual members?
 
-I will be using **R** for Data Analysis, and will be using **Tableau** for Data Visualization.
+I will be answering the first question using the 6 steps of data analysis taught in the Google Data Analytics course; **ask**, **prepare**, **process**, **analyze**, **share**, and **act**.
+
+The primary tools for my project are **R** for **Data Analysis**, and **Tableau** for **Data Visualization**.
 
 ---
 
-### **About the company**  
+### **Phase 1:Ask**  
 
 ---  
 
 
-**Cyclistic** developed a successful bike-share program in 2016. Since then, the initiative has evolved to include a fleet of 5,824 bicycles that are geotracked and locked into 692 stations across Chicago. The bikes may be unlocked and returned to any other station in the system at any time.  
+The **Cyclistic** executive team is focused on optimizing the company's future growth. The head of marketing, is focused with securing this growth by developing a marketing plan to turn casual Cyclistic riders into annual members. My marketing analytics team is focused on leveraging our data to answer the three questions above and then using the answers to steer the marketing campaign.
 
-**Cyclistic** also distinguishes itself by providing reclining bikes, hand tricycles, and cargo bikes, making bike-share more accessible to persons with impairments and others who are unable to ride a regular two-wheeled bike.  
-
-**Cyclistic** offers a variety of price options, including single-ride passes, full-day permits, and annual memberships. Casual riders are customers who purchase single-ride or full-day passes. Member riders are customers who pay yearly memberships.
+The current job is to evaluate the data and discover major behavioral distinctions between casual riders and annual members so that the firm may be advised on next moves.
 
 ---
 
-### **Phase 1:Ask**
+### **Phase 2:Prepare - (Data Transformation)**
 
 ---  
 
+The project's data is stored on Amazon Web Services (AWS) (Amazon Web services). I'm utilizing travel data from the previous 12 months, starting in 2021-05 and ending in 2022-04. Motivate International Inc. has made the data accessible under this license after collecting it directly from Cyclistic. There is no personally identifying information in the data because it has been anonymised. While this will prevent analyses that look into the personal characteristics of individual riders, such as their history or where they reside, but there is still enough data to uncover certain patterns.
 
-#### **Scenario**  
-
-
-You work as a junior data analyst in the marketing analyst team of **Cyclistic**, a Chicago-based bike-share firm. The director of marketing feels that increasing the number of yearly subscriptions is critical to the company's future success. As a result, your team is interested in learning how casual riders and member riders utilize Cyclistic bikes. Your team will devise a new marketing campaign based on these findings in order to convert casual riders into member riders. However, Cyclistic executives must first accept your ideas, therefore they must be supported with compelling data insights and good data visualizations.  
-
-The question you'll have to answer comes from the director of marketing: **How do member riders and casual riders use Cyclistic bikes differently?**  
-
-
-#### **Business Task**  
-
-
-**Analyze the data to find major behavioral differences between casual and member riders so that a targeted marketing campaign can be presented to convert casual riders to members.**
+The dataset is publicly available on [kaggle](https://www.kaggle.com/datasets/saireddy2000/cyclistic-bike-share-data-may-2021-to-apr-2022).
 
 ---
 
-### **Phase 2:Prepare**
+### **Phase 3:Process - (Data Cleaning)**
 
 ---  
 
-
-The data from the bike-sharing firm will be used in the project. The data used in the project is kept on AWS (Amazon Web Services). It was obtained directly from Cyclistic and made accessible under the license by Motivate International Inc. There is no personally identifying information in the data because it has been anonymised.  
-
-For my case study, I'll concentrate on the years 2021-2022 because it's the more relevant to the business task.
-
-The following information is accessible after downloading the data:  
-
-
-* Unique id for each ride  
-* Type of bikes (classic, electric, docked)
-* When the ride started (date and time)
-* When the ride ended (date and time)
-* Where the ride started (start station name and the corresponding lattitude and longitude)
-* Where the ride ended  (end station name and the corresponding lattitude and longitude)
-* Whether it's a member or a casual rider  
-
-
-#### **Code**
-
-Installing packages thar are required to perform the analysis:
-
-```{r}
-install.packages("tidyverse", repos = "http://cran.us.r-project.org")
-install.packages("lubridate", repos = "http://cran.us.r-project.org")
-install.packages("here", repos = "http://cran.us.r-project.org")
-install.packages("skimr", repos = "http://cran.us.r-project.org")
-
-```
-
-Loading the installed packages:
-
-```{r}
-library("tidyverse")
-library("lubridate")
-library("here")
-library("skimr")
-
-```
-
-To check what the current working directory is:
-
-```{r}
-getwd()
-
-```
-
-To set the current working directory in order to extract the data:
-
-```{r}
-setwd("C:/Users/user/Desktop/Data Analytics - Capstone Project")
-
-```
-
-Reading the 12 csv files for the trip data of months from may-2021 to apr-2022:
-
-```{r}
-T_2021_05 <- read_csv("2021_05_Divvy_Tripdata.csv")
-T_2021_06 <- read_csv("2021_06_Divvy_Tripdata.csv")
-T_2021_07 <- read_csv("2021_07_Divvy_Tripdata.csv")
-T_2021_08 <- read_csv("2021_08_Divvy_Tripdata.csv")
-T_2021_09 <- read_csv("2021_09_Divvy_Tripdata.csv")
-T_2021_10 <- read_csv("2021_10_Divvy_Tripdata.csv")
-T_2021_11 <- read_csv("2021_11_Divvy_Tripdata.csv")
-T_2021_12 <- read_csv("2021_12_Divvy_Tripdata.csv")
-T_2022_01 <- read_csv("2022_01_Divvy_Tripdata.csv")
-T_2022_02 <- read_csv("2022_02_Divvy_Tripdata.csv")
-T_2022_03 <- read_csv("2022_03_Divvy_Tripdata.csv")
-T_2022_04 <- read_csv("2022_04_Divvy_Tripdata.csv")
-
-```
-
-To check the data types and coloumn names of each of the datasets before merging them into a single dataset:
-
-```{r}
-str(T_2021_05)
-str(T_2021_06)
-str(T_2021_07)
-str(T_2021_08)
-str(T_2021_09)
-str(T_2021_10)
-str(T_2021_11)
-str(T_2021_12)
-str(T_2022_01)
-str(T_2022_02)
-str(T_2022_03)
-str(T_2022_04)
-
-```
-
-Merging the 12 datasets into a single dataset in order to perform efficient analysis:
-
-```{r}
-T_All <- bind_rows(T_2021_05,T_2021_06,T_2021_07,T_2021_08,T_2021_09,T_2021_10,T_2021_11,T_2021_12,T_2022_01,T_2022_02,T_2022_03,T_2022_04)
-
-```
-
----
-
-### **Phase 3:Process**
-
----  
-
-
-#### **Data Cleaning**  
-
-
-The total changes made to the data are listed below:  
-
+The total changes made to the data are summarized below:  
 
 * Excluded geographical coordinates
 * Removed rows with null values
@@ -185,88 +64,13 @@ The total changes made to the data are listed below:
 * Created a column to report duration of each ride
 * Excluded trips lasting less than or equal to 0 seconds  
 
+---  
 
-#### **Code**  
-
-
-Removing coloums `start_lat`,`start_lng`,`end_lat` and `end_lng` which show the corresponding starting and ending latitude and longitude of ride trip as its not required in order to perform the analysis:
-
-```{r}
-T_All <- T_All %>%  
-  select(-c(start_lat, start_lng, end_lat, end_lng))
-
-```
-
-Checking the coloumn names, the total number of rows and the generating insights into the data, its data types and high level view on its summary statistics:
-
-```{r}
-colnames(T_All)
-nrow(T_All)
-glimpse(T_All)
-skim_without_charts(T_All)
-head(T_All)
-
-```
-
-Removing rows with missing data:
-
-```{r}
-T_All <- T_All %>%
-  drop_na()
-
-```
-
-Removing rows with duplicate data:
-
-```{r}
-T_All <- T_All %>%
-  distinct()
-
-```
-
-Removing whitespace in the coloumns with character data type:
-
-```{r}
-T_All <- T_All %>%
-  mutate_if(is.character, str_trim)
-
-```
-
-Creating new coloums by extracting the day, month, year and hour of the ride trip from the coloumn `stared_at`:
-
-```{r}
-T_All$day <- format(as.Date(T_All$started_at), "%A")
-T_All$month <- format(as.Date(T_All$started_at), "%B")
-T_All$year <- format(as.Date(T_All$started_at), "%Y")
-T_All$hour <- format(as.POSIXct(T_All$started_at), "%H")
-glimpse(T_All)
-
-```
-Creating a new coloumn to calculate the total ride time by finding the difference within `ended_at` and `started_at` and converting the `total_ride_time` coloumn into numeric data type:
-
-```{r}
-T_All$total_ride_time <- difftime(T_All$ended_at,T_All$started_at)
-T_All$total_ride_time <- as.numeric(T_All$total_ride_time)
-is.numeric(T_All$total_ride_time)
-glimpse(T_All)
-
-```
-Removing rows which contain the `total_ride_time` as negative or zero value:
-
-```{r}
-T_All %>%
-  filter(total_ride_time <= 0) %>%
-  nrow()
-T_All <- T_All[!(T_All$total_ride_time <= 0),]
-
-```
-
----
-
-### **Phase 4: Analyze**
+### **Phase 4: Analyze - (Data Analysis)**
 
 ---  
 
+A detailed report on the complete **Data Analysis Process** along with the **Code** can be found [here](https://github.com/SaiReddy2000/cyclistic-case-study/blob/main/Data%20Analysis.md).
 
 I explored several variables for differences in behaviour between annual members and casual riders:
 
@@ -281,138 +85,9 @@ I also explored general trends in order to determine the usage of Cyclistic's se
 
 * Prefered months of the year  
 
-
-#### **Code**  
-
-
-Calculating the maximum, minimum and average time spent by a casual user:
-
-```{r}
-T_All %>%
-  filter(member_casual == "casual") %>%
-  summarize(max_casual = max(total_ride_time),min_casual = min(total_ride_time),avg_casual = mean(total_ride_time))
-
-```
-
-Calculating the maximum, minimum and average time spent by a member user:
-
-```{r}
-T_All %>%
-  filter(member_casual == "member") %>%
-  summarize(max_member = max(total_ride_time),min_member = min(total_ride_time),avg_member = mean(total_ride_time))
-
-```
-
-Calculating the ridership distribution based on the user type (Casual vs Member):
-
-```{r}
-T_All %>%
-  group_by(member_casual) %>%
-  summarize(number_of_rides = n())
-
-```
-
-Calculating the total ride time based on the user type (Casual vs Member):
-
-```{r}
-T_All %>%
-  group_by(member_casual) %>%
-  summarize(total_ride_time = sum(total_ride_time))
-
-```
-
-Calculating the usage of each of the bike types based on the user type (Casual vs Member):
-
-```{r}
-T_All %>%
-  filter(member_casual == "casual") %>%
-  group_by(rideable_type) %>%
-  summarize(number_of_rides = n())
-
-T_All %>%
-  filter(member_casual == "member") %>%
-  group_by(rideable_type) %>%
-  summarize(number_of_rides = n())
-
-```
-
-Calculating the most visited start and end stations for both casual and member riders: 
-
-```{r}
-T_All %>%
-  filter(member_casual == "casual") %>%
-  group_by(start_station_name) %>%
-  summarize(number_of_rides = n()) %>%
-  arrange(-number_of_rides) %>%
-  head(10)
-
-T_All %>%
-  filter(member_casual == "casual") %>%
-  group_by(end_station_name) %>%
-  summarize(number_of_rides = n()) %>%
-  arrange(-number_of_rides) %>%
-  head(10)
-
-T_All %>%
-  filter(member_casual == "member") %>%
-  group_by(start_station_name) %>%
-  summarize(number_of_rides = n()) %>%
-  arrange(-number_of_rides) %>%
-  head(10)
-
-T_All %>%
-  filter(member_casual == "member") %>%
-  group_by(end_station_name) %>%
-  summarize(number_of_rides = n()) %>%
-  arrange(-number_of_rides) %>%
-  head(10)
-
-```
-
-Calculating the number of riders based on months of the year:
-
-```{r}
-T_All %>%
-  group_by(month) %>%
-  summarize(number_of_rides = n())
-
-```
-
-Calculating the number of both casual and member riders based on the day of the week:
-
-```{r}
-T_All %>%
-  filter(member_casual == "casual") %>%
-  group_by(day) %>%
-  summarize(number_of_rides = n())
-
-T_All %>%
-  filter(member_casual == "member") %>%
-  group_by(day) %>%
-  summarize(number_of_rides = n())
-
-```
-
-Calculating the number of both casual and member riders based on the hour of the day:
-
-```{r}
-T_All %>%
-  filter(member_casual == "casual") %>%
-  group_by(hour) %>%
-  summarize(number_of_rides = n()) %>%
-  arrange(hour)
-
-T_All %>%
-  filter(member_casual == "member") %>%
-  group_by(hour) %>%
-  summarize(number_of_rides = n()) %>%
-  arrange(hour)
-
-```
-
 ---
 
-### **Phase 5: Share**
+### **Phase 5: Share - (Data Visualization)**
 
 ---  
 
